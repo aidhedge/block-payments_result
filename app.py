@@ -55,7 +55,7 @@ def fn():
     #if v(payload):
     result = dict(success=True, payload=payments.result(payload))
     result = json.dumps(result)
-    LOG.console(result)
+    #LOG.console(result)
     return result
     #else:
         #raise payloadNotMatchingSchema("Payload didn't match schema ({}\n{})".format(payload_input_schema, v.errors))
