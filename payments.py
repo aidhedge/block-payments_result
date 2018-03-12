@@ -49,7 +49,8 @@ def result(payload):
         pair = currency_from+currency_to
         obj['direction'] = t['direction']
         obj['pair'] = pair
-        obj["project_start_rate"] = queryCurrencyApi(pair=pair, date=t['start'])
+        if t['start'] <= todays_date:
+            obj["project_start_rate"] = queryCurrencyApi(pair=pair, date=t['start'])
         obj['payments'] = []
         for p in t["payments"]:
             if p['date'] <= todays_date:
