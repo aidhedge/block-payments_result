@@ -44,6 +44,8 @@ def result(payload):
     data = []
     for t in payload["transactions"]:
         obj = {}
+        if 'fixed_rate' in t:
+            obj['fixed_rate'] = t['fixed_rate']
         currency_from = t["currency_from"]
         currency_to = t["currency_to"]
         pair = currency_from+currency_to
@@ -59,9 +61,13 @@ def result(payload):
         data.append(obj)
     
     for transaction in data:
-        for payment in transaction['payments']:
-            payment['pct_diff'] = percent_diff(start=transaction['project_start_rate'], end=payment['rate'])
-            payment['abs_diff'] = pct_change(number=payment['amount'], pct=payment['pct_diff'])
+        for payment in transaction['payments']: 
+            if 'fixed_rate' in transaction:
+                payment['pct_diff'] = 0
+                payment['abs_diff'] = 0
+            else:
+                payment['pct_diff'] = percent_diff(start=transaction['project_start_rate'], end=payment['rate'])
+                payment['abs_diff'] = pct_change(number=payment['amount'], pct=payment['pct_diff'])
 
     return data   
 
