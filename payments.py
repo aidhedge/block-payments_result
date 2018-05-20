@@ -43,6 +43,7 @@ def result(payload):
     todays_date = today()
     data = []
     for t in payload["transactions"]:
+        direction
         obj = {}
         if 'fixed_rate' in t:
             obj['fixed_rate'] = t['fixed_rate']
@@ -57,7 +58,11 @@ def result(payload):
         for p in t["payments"]:
             if p['date'] <= todays_date:
                 rate = queryCurrencyApi(pair=pair, date=p['date'])
-                obj["payments"].append(dict(date=p['date'], rate=rate, amount=p['amount']))
+                if t['direction'] == 'in':
+                    obj["payments"].append(dict(date=p['date'], rate=rate, amount=p['amount']*rate))
+                else:
+                    obj["payments"].append(dict(date=p['date'], rate=rate, amount=p['amount']))
+
         data.append(obj)
     
     for transaction in data:
