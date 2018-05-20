@@ -43,7 +43,6 @@ def result(payload):
     todays_date = today()
     data = []
     for t in payload["transactions"]:
-        direction
         obj = {}
         if 'fixed_rate' in t:
             obj['fixed_rate'] = t['fixed_rate']
